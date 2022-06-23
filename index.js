@@ -45,6 +45,18 @@ async function run() {
             .db("doctorPortal")
             .collection("doctors");
 
+        const verifyAdmin = async (req, res, next) => {
+            const requester = req.decoded.email;
+            const requesterAccount = await userCollection.findOne({
+                email: requester,
+            });
+            if (requesterAccount.role === "admin") {
+                next();
+            } else {
+                res.status(403).send({ message: "forbidden" });
+            }
+        };
+
         // TO GET ALL SERVICES
         app.get("/service", async (req, res) => {
             const query = {};
