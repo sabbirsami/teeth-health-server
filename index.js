@@ -143,7 +143,7 @@ async function run() {
             var token = jwt.sign({ email: email }, process.env.WEB_TOKEN);
             res.send({ result, token });
         });
-        //;;
+
         app.get("/doctor", async (req, res) => {
             const doctors = await doctorCollection.find().toArray();
             res.send(doctors);
