@@ -115,6 +115,13 @@ async function run() {
             res.send(users);
         });
 
+        app.get("/booking/:id", verifyJWT, async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const booking = await bookingCollection.findOne(query);
+            res.send(booking);
+        });
+
         // FOR ADD ADMIN TAG
         app.put("/user/admin/:email", verifyJWT, async (req, res) => {
             const email = req.params.email;
